@@ -29,7 +29,7 @@ class PatchedRequest(object):
 
 class TestViews(TransactionTestCase):
 
-    def test_delete_search_result(self):
+    def test_parsing_most_common_words(self):
         data = dict(url="https://en.wikipedia.org/wiki/2018_FIFA_World_Cup")
         with mock.patch('common_words.words.views.requests', new=PatchedRequest()):
             response = self.client.post("/", json.dumps(data), content_type='application/json')
