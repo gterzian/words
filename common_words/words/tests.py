@@ -35,4 +35,5 @@ class TestViews(TransactionTestCase):
             response = self.client.post("/", json.dumps(data), content_type='application/json')
             self.assertEqual(response.status_code, 200)
             fifa = Word.objects.get(word='FIFA')
+            # Only count the occurences in actual text, not inside HTML tags and so on...
             self.assertEqual(fifa.occurences, 3)
