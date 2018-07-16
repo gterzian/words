@@ -12,7 +12,7 @@ from django.views.decorators.http import require_http_methods
 from .models import Word
 
 
-class Parser(HTMLParser.HTMLParser):
+class WordCounter(HTMLParser.HTMLParser):
 
     words = []
 
@@ -31,9 +31,9 @@ class Parser(HTMLParser.HTMLParser):
 def process_url(request):
     data = json.loads(request.body)
     r = requests.get(data['url'])
-    parser = Parser()
-    parser.feed(r.text)
-    most_common = parser.get_most_common_words(100)
+    word_counter = WordCounter()
+    word_counter.feed(r.text)
+    most_common = word_counter.get_most_common_words(100)
     Word.objects.bulk_create(most_common)
-    parser.close()
+    word_counter.close()
     return HttpResponse('OK')
