@@ -7,6 +7,7 @@ import json
 
 import requests
 from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
 
 from .models import Word
 
@@ -26,6 +27,7 @@ class Parser(HTMLParser.HTMLParser):
             yield Word(word=word, occurences=count)
 
 
+@require_http_methods(["POST"])
 def process_url(request):
     data = json.loads(request.body)
     r = requests.get(data['url'])
