@@ -33,7 +33,7 @@ def process_url(request):
     r = requests.get(data['url'])
     word_counter = WordCounter()
     word_counter.feed(r.text)
+    word_counter.close()
     most_common = word_counter.get_most_common_words(100)
     Word.objects.bulk_create(most_common)
-    word_counter.close()
     return HttpResponse('OK')
