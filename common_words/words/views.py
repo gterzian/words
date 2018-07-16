@@ -35,4 +35,5 @@ def process_url(request):
     parser.feed(r.text)
     most_common = parser.get_most_common_words(100)
     Word.objects.bulk_create(most_common)
+    parser.close()
     return HttpResponse('OK')
